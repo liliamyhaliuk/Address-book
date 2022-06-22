@@ -65,14 +65,9 @@ class AdressBook:
 
         # Get all attributes of contact from the user
         cont_name = input("Name of the new contact: ")
+
         # Check entered name
-                # Check entered name
-        if cont_name in [" ", ""]:
-            # Give last chance to enter correct name
-            cont_name = input("Emptiness! User will have name 'Undefined'. Enter name if you want another name: ")
-            if cont_name in [" ", ""]:
-                self.undefined_contacts += 1
-                cont_name = "Undefined" + str(self.undefined_contacts)
+        cont_name = self.check_name(cont_name)
 
         cont_email = input("Email of the new contact: ")
         cont_adress = input("Address of the new contact: ")
@@ -97,6 +92,20 @@ class AdressBook:
         else:
             print("Contact wasn't added!")
 
+    def check_name(self, inp_name):
+        """Function checks entered name"""
+
+        # Cut all spaces
+        inp_name = inp_name.strip()
+        if inp_name == "":
+            # Give last chance to enter correct name
+            inp_name = input("Emptiness! User will have name 'Undefined'. Enter name if you want another name: ")
+            inp_name = inp_name.strip()
+            if inp_name == "":
+                self.undefined_contacts += 1
+                inp_name = "Undefined" + str(self.undefined_contacts)
+
+        return inp_name
 
     def change_param(self, mod_contact, param):
         """Function modifies passed parameter of the contact"""
@@ -114,13 +123,8 @@ class AdressBook:
         old_name = mod_contact.name.lower()
         new_name = input(f"Enter new {mod_attr}: ")
 
-        # Check entered name
-        if new_name in [" ", ""]:
-            # Give last chance to enter correct name
-            new_name = input("Emptiness! User will have name 'Undefined'. Enter name if you want another name: ")
-            if new_name in [" ", ""]:
-                self.undefined_contacts += 1
-                new_name = "Undefined" + str(self.undefined_contacts)
+        #Check entered name
+        new_name = self.check_name(new_name)
 
         # Change the key (name of the contact) in address book dict
         for key in self.address_book.keys():
