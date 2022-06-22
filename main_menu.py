@@ -16,14 +16,10 @@ ADDRESS_BOOK_PATH = os.path.sep.join(["address_book", "address_book.pkl"])
 if os.path.isfile(ADDRESS_BOOK_PATH):
     with open(ADDRESS_BOOK_PATH, 'rb') as f:
         new_address_book_dict = pickle.load(f)
-        # import ipdb
 
-        # ipdb.set_trace()
-        new_address_book = AdressBook()
-        new_address_book.address_book = new_address_book_dict
+        new_address_book = AdressBook(new_address_book_dict)
 
 else:
-    print("Hello")
     # Create new address book
     new_address_book = AdressBook()
 
@@ -41,7 +37,7 @@ while True:
     # Get the number of action from the user
     action = input(
         '''
-    Address book menu: 
+    Address book menu:
         1 - Browse in address book
         2 - Add new contact
         3 - Modify a contact
@@ -57,17 +53,10 @@ while True:
     # Find and do chosen action
     try:
         actions.get(action)()
-    except KeyError:
+    except TypeError:
         print("Action does't exist")
         continue
 
-# import ipdb
-
-# ipdb.set_trace()
 # Save address book for later retrieval
 with open(ADDRESS_BOOK_PATH, "wb+") as f:
     pickle.dump(new_address_book.address_book, f, protocol=pickle.HIGHEST_PROTOCOL)
-
-# import ipdb
-
-# ipdb.set_trace()
